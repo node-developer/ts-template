@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "outDir": "temp",
+    "target": "es5",
+    "importHelpers": true,
+    "lib": [
+      "dom",
+      "es6",
+      "es2016"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
