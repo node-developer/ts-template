@@ -12,7 +12,7 @@ export default class Mat {
     __row: number,
     __col: number,
     __data: Uint8ClampedArray,
-    __buffer: ArrayBuffer
+    __buffer?: ArrayBuffer
   ) {
 
     this.row = __row

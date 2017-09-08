@@ -4,11 +4,20 @@
     "outDir": "temp",
     "target": "es5",
     "importHelpers": true,
+    "moduleResolution": "node",
     "lib": [
       "dom",
       "es6",
       "es2016"
-    ]
+    ],
+    "paths": {
+      "tslib": [
+        "./node_modules/tslib/tslib.d.ts"
+      ]
+    },
+    "jsx": "react",
+    "jsxFactory": "h",
+    "experimentalDecorators": true
   },
   "include": [
     "src/**/*"

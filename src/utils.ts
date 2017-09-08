@@ -1,4 +1,5 @@
-export function load(src: string): Promise<Uint8ClampedArray> {
+import Mat from './core/mat'
+export function load(src: string): Promise<Mat> {
   return new Promise((resolve: Function, reject: Function) => {
     let container: HTMLDivElement = document.createElement('div')
     let image: HTMLImageElement = new Image()
@@ -26,7 +27,8 @@ export function load(src: string): Promise<Uint8ClampedArray> {
       height = canvas.height = image.naturalHeight || image.offsetHeight
 
       ctx.drawImage(image, 0, 0, width, height)
-      resolve(ctx.getImageData(0, 0, width, height))
+      let { data } = ctx.getImageData(0, 0, width, height)
+      resolve(new Mat(width, height, data))
       requestAnimationFrame(clear)
     })
 
