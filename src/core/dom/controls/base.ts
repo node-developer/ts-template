@@ -3,9 +3,11 @@ import { VProperties } from 'virtual-dom';
 import h from 'virtual-dom/h'
 import { absolute } from '../decorators/position';
 import merge from 'merge'
+import EventEmitter from 'events'
+import { Mounted } from '../hook';
 
 @absolute
-export default class Base {
+export default class Base extends EventEmitter {
 
   protected tagName: string = 'div'
 
@@ -19,8 +21,10 @@ export default class Base {
 
   public position: string
 
-  public constructor(type: string = 'base', children?: Base[]) {
+  public el: HTMLElement
 
+  public constructor(type: string = 'base', children?: Base[]) {
+    super()
     this._uid = Math.round(Math.random() * 1e5)
     this.type = type
     children ?
@@ -32,7 +36,7 @@ export default class Base {
 
 
   public push(...args) {
-    args[0].parent = this
+    args.forEach(child => child.parent = this)
     return push(this, ...args)
   }
 
@@ -54,11 +58,25 @@ export default class Base {
     return result
   }
 
+  protected onselect(e: MouseEvent) {
+
+  }
+
+  public onMounted(node) {
+    this.el = node
+    this.emit('mounted', this)
+  }
+
   public render(vproperties: VProperties = {}) {
-    vproperties = merge.recursive(true, vproperties, {
+    let self = this;
+    vproperties = merge.recursive(vproperties, {
       style: {
         position: this.position
-      }
+      },
+      onclick: (e) => this.onselect(e)
+    })
+    vproperties.mounted = Mounted(node => {
+      this.onMounted(node)
     })
     return h(this.type ? `${this.tagName}.${this.type}` : `${this.tagName}`, vproperties, this.map(child => child.render()));
   }

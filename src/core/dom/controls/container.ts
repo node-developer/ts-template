@@ -1,5 +1,5 @@
 import Base from "./base";
-import { VProperties, h } from "virtual-dom";
+import { VProperties } from "virtual-dom";
 import { BaseDisplay } from "../const";
 import merge from 'merge'
 
@@ -7,7 +7,8 @@ interface IContainerparameter {
   x: number,
   y: number,
   width: number,
-  height: number
+  height: number,
+  onselect?: Function
 }
 
 export default class Container extends Base {
@@ -24,6 +25,16 @@ export default class Container extends Base {
     this._y = y
     this.width = width
     this.height = height
+
+    this.on('onselecthandler', (...args) => this.onselecthandler(...args))
+  }
+
+  public get staticX(): number {
+    return this._x
+  }
+
+  public get staticY(): number {
+    return this._y
   }
 
   public get x(): number {
@@ -36,13 +47,24 @@ export default class Container extends Base {
     return parent ? this._y - parent.y : this._y
   }
 
+  protected onselecthandler(container?: Container) {
+    if (this.parent) {
+      this.parent.emit('onselecthandler', container || this)
+    }
+  }
+
+  protected onselect(e: MouseEvent) {
+    this.emit('onselecthandler', this)
+    e.stopPropagation()
+  }
+
   public render(vproperties: VProperties = {}) {
     vproperties = merge.recursive(true, vproperties, {
       style: {
         left: this.x + 'px',
         top: this.y + 'px',
         width: this.width === BaseDisplay.FULL ? '100%' : this.width + 'px',
-        height: this.height + 'px'
+        height: this.height === BaseDisplay.FULL ? '100%' : this.height + 'px',
       }
     })
     return super.render(vproperties)

@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dev.js",
-    "dev": "rollup -c -w"
+    "dev": "node dev.js",
+    "build": "rollup -c -w"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^8.0.28",
     "@types/virtual-dom": "^2.0.27",
     "autoprefixer-stylus": "^0.14.0",
     "cross-env": "^5.0.5",
@@ -23,6 +24,7 @@
     "typescript": "^2.5.2"
   },
   "dependencies": {
+    "events": "^1.1.1",
     "merge": "^1.2.0",
     "tslib": "^1.7.1",
     "virtual-dom": "^2.1.1"

@@ -1,5 +1,7 @@
 import Base from "./base";
 import h from "virtual-dom/h";
+import { when } from './../utils';
+import { Mounted } from './../hook';
 
 export default class Loading extends Base {
   constructor() {
@@ -8,10 +10,13 @@ export default class Loading extends Base {
 
   render() {
     return h('svg.loading', {
-      attributes: {
-        width: 24,
-        height: 30
-      }
+      style: {
+        width: '24px',
+        height: '30px'
+      },
+      mounted: Mounted(node => {
+        node.parentNode.innerHTML = node.outerHTML
+      })
     }, [
         h('use', {
           attributes: {

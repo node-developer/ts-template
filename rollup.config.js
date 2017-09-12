@@ -13,7 +13,9 @@ export default {
   },
   sourcemap: true,
   plugins: [
-    resolve(),
+    resolve({
+      preferBuiltins: false
+    }),
     commonjs({
       exclude: Object.keys(config.devDependencies).map(name => `node_modules/${name}/**`)
     }),

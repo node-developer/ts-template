@@ -1,4 +1,4 @@
-import Mat from './core/mat'
+import Mat from './mat'
 export function load(src: string): Promise<Mat> {
   return new Promise((resolve: Function, reject: Function) => {
     let container: HTMLDivElement = document.createElement('div')

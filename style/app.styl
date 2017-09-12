@@ -6,12 +6,13 @@ html, body {
   margin: 0;
   font-family: 'Microsoft YaHei';
   font-size: 12px;
-  // background: linear-gradient(to top, #1e1e1e, black);
-  background: black;
+  background: linear-gradient(to top, #1e1e1e, black);
+  // background: black;
   overflow: hidden;
 }
 
 svg.loading {
+  display: none;
 
   path, rect {
     fill: white;
@@ -86,4 +87,15 @@ footer {
   .source {
     flex-grow: 1;
   }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.selection-box {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.2);
 }
