@@ -1,3 +1,10 @@
+declare module events {
+  export class EventEmitter {
+    on(event: string | symbol, listener: (...args: any[]) => void): this;
+    emit(event: string | symbol, ...args: any[]): boolean;
+  }
+}
+
 import { push, splice, forEach, slice } from './../utils';
 import { VProperties } from 'virtual-dom';
 import h from 'virtual-dom/h'
