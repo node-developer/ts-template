@@ -2,52 +2,27 @@ import DomRender from "./../core/helper/dom-render";
 import Background from "./../core/dom/controls/background";
 import Container from "./../core/dom/controls/container";
 import Chart from "./../core/dom/controls/chart";
-import CurrentSelection from "./../core/helper/current-selection";
+import events from 'events'
+import Base from "../core/dom/controls/base";
 
-export default class HtmlEditor {
+export default class HtmlEditor extends events {
 
   public static initialize(): HtmlEditor {
     return new HtmlEditor()
   }
+  private domRender: DomRender
+  private node: Background
 
   constructor() {
+    super()
+    this.domRender = new DomRender(document.querySelector('.html'))
+    this.node = new Background()
+    this.domRender.create(this.node.render())
 
-    let domRender
-    let node
-    let selection
+    this.node.on('onselecthandler', o => this.onSelectNode(o))
+  }
 
-    domRender = new DomRender(document.querySelector('.html'))
-
-    node = new Background([
-      new Container({
-        x: 0, y: 0, height: 110, width: 110
-      },
-        [
-          new Container({
-            x: 10, y: 10, height: 40, width: 40
-          },
-            [
-              new Chart()
-            ]
-          ),
-          new Container({
-            x: 60, y: 10, height: 40, width: 40
-          },
-            [
-              new Chart()
-            ]
-          )
-        ]
-      )
-    ])
-
-    node.on('onselecthandler', function (c) {
-      selection.set(c)
-    })
-
-    domRender.create(node.render())
-
-    selection = new CurrentSelection()
+  onSelectNode(o: Base) {
 
   }
 }
